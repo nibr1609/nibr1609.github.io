@@ -9,7 +9,7 @@ redirect_from:
 ---
 
 Hey, my name is Niklas Britz and I'm currently a student at [Saarland University](https://saarland-informatics-campus.de/), Germany. 
-I specialize in **Cryptography**. Iam currently working on my bachelor's thesis, centering around secret-sharing.
+I specialize in **Cryptography**. I am currently working on my bachelor's thesis, centering around secret-sharing.
 
 From September 2022 to June 2023 I did a study abroad at the [University of Washington](https://www.cs.washington.edu/), Seattle. 
 
