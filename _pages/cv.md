@@ -45,7 +45,7 @@ Worked on machine learning projects for customers and developed skills in ML and
 # Research Projects
 * 10-page [review article](http://nibr1609.github.io/files/forks.pdf) on “forking” as part of a seminar on open-source projects in software engineering (unpublished, 2022).
 * 15-page [review article](http://nibr1609.github.io/files/codeDifficulty.pdf) on how one can measure code difficulty by examining psycho-physiological signals of humans and proposal on how to improve current research as part of a seminar called “Software Engineering in the Neuroage” (unpublished, 2022).
-* Bachelor’s thesis centering around linear integer secret sharing with (discrete) Gaussian distributions in cryptography (ongoing, expected completion by early 2024).
+* [Bachelor’s thesis](https://nibr1609.github.io/files/thesis_cs_bsc_britz_niklas.pdf) centering around linear integer secret sharing with (discrete) Gaussian distributions in cryptography (published at computer science library at Saarland University).
 * Research on cryptography and learning theory with Nico Döttling at CISPA (ongoing, expected completion by early 2024).
 
 ---
