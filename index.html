@@ -1,329 +1,702 @@
-<!-- redeploy -->
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Niklas Britz</title>
-    <!-- Google Fonts -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <!-- Font Awesome for icons -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-      integrity="sha512-9ynkz0czuFmiI0rHvWYhsKiIqWLfYl0rLaotRG57mC/8KDCfuIoxwTeCnAf1tiJYbybAeolfI7pKtJMMxEMZ1w=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <!-- Main stylesheet -->
-    <link rel="stylesheet" href="style.css" />
-    <!-- Main script (deferred) -->
-    <script defer src="script.js"></script>
-  </head>
-  <body>
-    <!-- Animated light beams canvas -->
-    <canvas id="beams"></canvas>
-    <!-- Hero / Landing section -->
-    <header id="hero" class="hero">
-      <nav class="navbar">
-        <div class="logo">Niklas Britz</div>
-        <ul class="nav-links">
-          <li><a href="#about">About</a></li>
-          <li><a href="#projects">Projects</a></li>
-      <!-- Rename startup link to LupAi to reflect the company name directly -->
-      <li><a href="#lupai">LupAi</a></li>
-          <li><a href="#contact">Connect</a></li>
-        </ul>
-      </nav>
-      <div class="hero-content">
-        <h1>ETH CS Master's Student &amp; Co-Founder</h1>
-        <p> As a master’s student at ETH Zürich, I focus on studying and researching the latest advancements in AI and privacy-preserving machine learning through cryptography.</p><p> As the Co-Founder of <a href="https://lupai.ch" target="_blank">LupAi</a>, I apply this expertise to design and create AI solutions for small and medium-sized businesses.
-        </p>
-        <div class="hero-buttons">
-          <a class="btn primary" href="#about">About Me</a>
-          <a class="btn secondary" href="https://lupai.ch" target="_blank"
-            >LupAi</a
-          >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Niklas Britz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #f0ece4;
+      --card:    rgba(26,22,16,0.04);
+      --text:    #1a1610;
+      --muted:   #6b6457;
+      --border:  rgba(26,22,16,0.1);
+      --gold:    #b8965c;
+      --teal:    #5c98b8;
+      --rose:    #b85c7e;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 20px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 200;
+      background: rgba(240,236,228,0.88);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border); border-radius: 50px;
+      padding: 8px 20px;
+      display: flex; align-items: center; gap: 24px;
+      white-space: nowrap;
+    }
+    .nav-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      overflow: hidden; flex-shrink: 0;
+      border: 2px solid rgba(26,22,16,0.15);
+      text-decoration: none; display: block;
+    }
+    .nav-avatar img { width: 100%; height: 100%; object-fit: cover; object-position: center 8%; display: block; }
+    nav a.nav-link {
+      text-decoration: none; color: var(--muted);
+      font-size: 12px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    nav a.nav-link:hover { color: var(--text); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center;
+      max-width: 1160px; margin: 0 auto;
+      padding: 110px 60px 80px; gap: 80px;
+    }
+    .hero-left h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(68px,8.5vw,108px);
+      font-weight: 400; line-height: 0.95;
+      margin-bottom: 36px; letter-spacing: -0.01em;
+    }
+    .hero-tagline {
+      font-size: 17px; color: var(--muted);
+      line-height: 1.75; max-width: 400px; margin-bottom: 36px;
+    }
+    .hero-badges { display: flex; gap: 10px; flex-wrap: wrap; }
+    .badge {
+      display: flex; align-items: center; gap: 7px;
+      padding: 7px 14px; background: rgba(26,22,16,0.06);
+      border-radius: 30px; font-size: 11px; font-weight: 500;
+      letter-spacing: 0.07em; text-transform: uppercase;
+    }
+    .badge-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .hero-right { display: flex; flex-direction: column; align-items: flex-start; gap: 44px; }
+    .profile-wrap { position: relative; align-self: center; }
+    .profile-photo {
+      width: 260px; height: 260px; border-radius: 50%;
+      object-fit: cover; object-position: center 10%;
+      border: 5px solid rgba(255,255,255,0.7);
+      box-shadow: 0 24px 64px rgba(0,0,0,0.14); display: block;
+    }
+    .profile-tag {
+      position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%);
+      background: var(--text); color: var(--bg);
+      padding: 7px 18px; border-radius: 30px;
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap;
+    }
+    .quick-links { width: 100%; }
+    .ql-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+    .ql-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 11px 14px; border-radius: 12px;
+      text-decoration: none; color: var(--text);
+      font-size: 14px; transition: background 0.18s; margin-bottom: 3px;
+    }
+    .ql-item:hover { background: rgba(26,22,16,0.06); }
+    .ql-icon {
+      width: 30px; height: 30px; background: rgba(26,22,16,0.07);
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; color: var(--muted);
+    }
+
+    /* ── LAYOUT UTILS ── */
+    .divider { max-width: 1160px; margin: 0 auto; padding: 0 60px; }
+    .divider hr { border: none; border-top: 1px solid var(--border); }
+    section { max-width: 1160px; margin: 0 auto; padding: 96px 60px; }
+    .s-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+    .s-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(38px,4.5vw,56px); font-weight: 400;
+      line-height: 1.15; margin-bottom: 56px;
+    }
+
+    /* ── ABOUT ── */
+    .about-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 64px; align-items: start; }
+    .about-text p { font-size: 16.5px; line-height: 1.82; color: var(--muted); margin-bottom: 18px; }
+    .about-text p strong { color: var(--text); font-weight: 500; }
+    .skills-stack { display: grid; gap: 12px; }
+    .skill-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 18px 22px; }
+    .skill-card-label { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 7px; }
+    .tag { font-size: 12.5px; background: rgba(255,255,255,0.65); border: 1px solid var(--border); padding: 3px 11px; border-radius: 20px; color: var(--text); }
+
+    /* ── PROJECT CARDS ── */
+    .project-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 24px; padding: 40px; margin-bottom: 28px;
+      transition: transform 0.28s cubic-bezier(.22,.68,0,1.2), box-shadow 0.28s;
+    }
+    .project-card:hover { transform: translateY(-5px); box-shadow: 0 24px 64px rgba(0,0,0,0.09); }
+    .p-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+    .p-badge { font-size: 10px; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; padding: 5px 12px; border-radius: 20px; }
+    .p-exited { background: rgba(184,150,92,0.18); color: #7a5c1a; }
+    .p-active  { background: rgba(92,152,184,0.18); color: #1a5c7a; }
+    .p-ios     { background: rgba(184,92,126,0.15); color: #7a1a40; }
+    .p-ai      { background: rgba(92,184,152,0.15); color: #1a7a5c; }
+    .p-hack    { background: rgba(140,92,184,0.15); color: #4a1a7a; }
+    .project-title { font-family: 'Playfair Display', serif; font-size: 30px; font-weight: 500; margin-bottom: 14px; }
+    .project-desc { font-size: 15.5px; color: var(--muted); line-height: 1.75; margin-bottom: 24px; max-width: 580px; }
+    .project-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 12px; font-weight: 500; letter-spacing: 0.06em;
+      color: var(--muted); text-decoration: none;
+      border: 1px solid var(--border); padding: 5px 14px;
+      border-radius: 20px; transition: all 0.18s;
+    }
+    .project-link:hover { background: var(--text); color: var(--bg); border-color: var(--text); }
+    .project-header-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+
+    /* LupAi logo: img + filter to recolor purple → warm brown */
+    .lupai-logo { width: 68px; height: 68px; display: block; flex-shrink: 0; filter: grayscale(1) sepia(0.85) saturate(2.5) hue-rotate(5deg) brightness(0.62); }
+    .lupai-title-row { display: flex; align-items: center; gap: 14px; }
+    .lupai-title-row .project-title { margin-bottom: 0; }
+
+    /* Feature bento grid */
+    .feature-bento { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-top: 26px; }
+    .fb-card {
+      background: rgba(255,255,255,0.5); border: 1px solid var(--border);
+      border-radius: 16px; overflow: hidden;
+      transition: transform 0.25s cubic-bezier(.22,.68,0,1.2), box-shadow 0.25s;
+    }
+    .fb-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.09); }
+    .fb-rag        { grid-column: 1 / 3; }
+    .fb-testimonial{ grid-column: 3 / 4; display: flex; flex-direction: column; }
+    .fb-financial  { grid-column: 1 / 4; }
+    .fb-img        { width: 100%; height: 180px; object-fit: cover; display: block; }
+    .fb-financial .fb-img { height: 210px; }
+    .fb-img-contain { width: 100%; height: 180px; object-fit: contain; display: block; background: #f5f5f3; }
+    .fb-rag-fullwidth { display: flex; flex-direction: row; align-items: stretch; }
+    .fb-rag-fullwidth .fb-content { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 20px 22px; }
+    .fb-rag-fullwidth .fb-img-side { width: 30%; flex-shrink: 0; object-fit: contain; display: block; background: #f5f5f3; }
+    .fb-content    { padding: 14px 16px 16px; }
+    .fb-title      { font-size: 13px; font-weight: 600; margin-bottom: 5px; }
+    .fb-body       { font-size: 12px; color: var(--muted); line-height: 1.55; }
+    .fb-testimonial-body {
+      flex: 1; padding: 18px 18px 20px;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .vaterland-logo { height: 20px; width: auto; margin-bottom: 10px; display: block; }
+    .t-label { font-size: 9px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+    .t-quote { font-size: 12.5px; font-style: italic; line-height: 1.62; color: var(--text); margin-bottom: 10px; flex: 1; }
+    .t-cite  { font-size: 11px; color: var(--muted); font-weight: 500; }
+
+    /* ── PHONE SHOWCASE ── */
+    .yk-layout { display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: center; }
+    .phone-showcase { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+    .phone-lg {
+      width: 190px; height: 400px;
+      background: var(--text); border-radius: 40px; padding: 8px;
+      position: relative;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.2), 0 12px 24px rgba(0,0,0,0.12),
+                  inset 0 0 0 1px rgba(255,255,255,0.07);
+    }
+    .phone-lg::before {
+      content: ''; position: absolute;
+      top: 14px; left: 50%; transform: translateX(-50%);
+      width: 54px; height: 5px;
+      background: rgba(255,255,255,0.1); border-radius: 10px; z-index: 2;
+    }
+    .phone-lg-screen {
+      width: 100%; height: 100%; border-radius: 33px;
+      overflow: hidden; background: var(--bg); position: relative;
+    }
+    .ps-img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; object-fit: cover;
+      opacity: 0; transition: opacity 0.55s cubic-bezier(0.4,0,0.2,1);
+    }
+    .ps-img.active { opacity: 1; }
+    .ps-controls { display: flex; align-items: center; gap: 10px; }
+    .sl-btn {
+      width: 32px; height: 32px; border-radius: 50%;
+      border: 1.5px solid var(--border); background: transparent;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      color: var(--text); transition: all 0.18s; flex-shrink: 0;
+    }
+    .sl-btn svg { width: 12px; height: 12px; }
+    .sl-btn:hover { background: var(--text); color: var(--bg); border-color: var(--text); }
+    .sl-dots { display: flex; gap: 5px; }
+    .sl-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(26,22,16,0.2); cursor: pointer; transition: all 0.2s; }
+    .sl-dot.active { width: 18px; border-radius: 3px; background: var(--text); }
+
+    /* ── HACKATHON CARDS ── */
+    .hackathon-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .hack-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 24px; overflow: hidden;
+      transition: transform 0.28s cubic-bezier(.22,.68,0,1.2), box-shadow 0.28s;
+    }
+    .hack-card:hover { transform: translateY(-5px); box-shadow: 0 24px 64px rgba(0,0,0,0.09); }
+    .hack-img { width: 100%; height: 200px; object-fit: cover; object-position: center; display: block; }
+    .hack-placeholder {
+      width: 100%; height: 200px;
+      background: linear-gradient(135deg, #e4ddf5 0%, #d4e8f0 100%);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hack-placeholder span { font-family: 'Playfair Display',serif; font-size: 42px; font-weight: 400; color: rgba(107,100,87,0.45); }
+    .hack-body { padding: 28px 30px; }
+    .hack-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 500; margin-bottom: 10px; }
+    .hack-desc { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 18px; }
+
+    /* ── RESEARCH ── */
+    .research-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .r-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 20px; overflow: hidden;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .r-card:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(0,0,0,0.07); }
+    .r-body { padding: 28px 30px; }
+    .r-domain { display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); margin-bottom: 10px; }
+    .r-title { font-family: 'Playfair Display', serif; font-size: 19px; font-weight: 500; margin-bottom: 10px; line-height: 1.35; }
+    .r-desc { font-size: 13.5px; color: var(--muted); line-height: 1.7; }
+    .r-link {
+      display: inline-flex; align-items: center; gap: 5px;
+      margin-top: 16px; font-size: 11px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none;
+      border-bottom: 1px solid var(--border); padding-bottom: 2px;
+      transition: color 0.18s, border-color 0.18s;
+    }
+    .r-link:hover { color: var(--text); border-color: var(--text); }
+
+    /* Research card visuals */
+    .r-img-fill { width: 100%; height: 200px; object-fit: cover; display: block; }
+    .r-img-contain { width: 100%; height: 200px; object-fit: contain; background: #fff; display: block; padding: 12px; }
+
+    /* Sentiment collage */
+    .sentiment-collage { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 110px 90px; gap: 3px; height: 200px; overflow: hidden; }
+    .sc-wide { grid-column: 1 / 3; width: 100%; height: 100%; object-fit: cover; display: block; }
+    .sc-half { width: 100%; height: 100%; object-fit: cover; display: block; }
+    /* Bachelor thesis collage */
+    .bt-collage { display: grid; grid-template-columns: 30% 1fr; grid-template-rows: 1fr 1fr; gap: 3px; height: 200px; overflow: hidden; background: #fff; }
+    .bt-cover { grid-column: 1 / 2; grid-row: 1 / 3; width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+    .bt-half  { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; background: #fff; }
+
+    /* ── CONTACT ── */
+    #contact { text-align: center; padding-bottom: 120px; }
+    .contact-inner { max-width: 560px; margin: 0 auto; }
+    .contact-inner p { font-size: 17px; color: var(--muted); line-height: 1.75; margin-bottom: 48px; }
+    .contact-links { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .c-link {
+      display: flex; align-items: center; gap: 9px;
+      padding: 12px 26px; border-radius: 50px;
+      text-decoration: none; font-size: 13.5px; font-weight: 500;
+      border: 1.5px solid var(--border); color: var(--text); transition: all 0.2s;
+    }
+    .c-link svg { width: 15px; height: 15px; flex-shrink: 0; }
+    .c-link:hover { background: var(--text); color: var(--bg); border-color: var(--text); }
+    .c-link.primary { background: var(--text); color: var(--bg); border-color: var(--text); }
+    .c-link.primary:hover { background: transparent; color: var(--text); }
+
+    footer { text-align: center; padding: 28px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--border); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 860px) {
+      .hero { grid-template-columns: 1fr; padding: 100px 32px 60px; gap: 48px; }
+      .hero-right { align-items: center; }
+      .about-grid, .yk-layout, .hackathon-grid, .research-grid { grid-template-columns: 1fr; }
+      .phone-showcase { width: 100%; }
+      section { padding: 72px 32px; }
+      .divider { padding: 0 32px; }
+      .feature-bento { grid-template-columns: 1fr; }
+      .fb-rag, .fb-testimonial, .fb-financial { grid-column: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav>
+  <a href="#" class="nav-avatar">
+    <img src="niklas%20copy.jpg" alt="Niklas Britz">
+  </a>
+  <a href="#about"    class="nav-link">About</a>
+  <a href="#ventures" class="nav-link">Ventures</a>
+  <a href="#research" class="nav-link">Research</a>
+  <a href="#contact"  class="nav-link">Contact</a>
+</nav>
+
+<!-- ─── HERO ─── -->
+<div class="hero">
+  <div class="hero-left">
+    <h1>Niklas<br>Britz</h1>
+    <p class="hero-tagline">My name is Niklas. I am currently doing a masters at ETH Zürich, building an AI consulting & development company called LupAi, doing research, and working on various fun projects.</p>
+    <div class="hero-badges">
+      <div class="badge"><div class="badge-dot" style="background:var(--rose)"></div>MSc @ ETH Zürich</div>
+      <div class="badge"><div class="badge-dot" style="background:var(--teal)"></div>AI &amp; ML</div>
+      <div class="badge"><div class="badge-dot" style="background:var(--gold)"></div>Co-Founder</div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="profile-wrap">
+      <img src="niklas%20copy.jpg" alt="Niklas Britz" class="profile-photo">
+      <div class="profile-tag">MSc CS &middot; ETH Zürich</div>
+    </div>
+    <div class="quick-links">
+      <div class="ql-label">Where you can start</div>
+      <a href="#about" class="ql-item">
+        <div class="ql-icon"><svg viewBox="0 0 16 16" fill="currentColor" width="14" height="14"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/></svg></div>
+        Learn about me
+      </a>
+      <a href="#ventures" class="ql-item">
+        <div class="ql-icon"><svg viewBox="0 0 16 16" fill="currentColor" width="14" height="14"><path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/></svg></div>
+        See my ventures
+      </a>
+      <a href="#research" class="ql-item">
+        <div class="ql-icon"><svg viewBox="0 0 16 16" fill="currentColor" width="14" height="14"><path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z"/></svg></div>
+        Read my research
+      </a>
+      <a href="#contact" class="ql-item">
+        <div class="ql-icon"><svg viewBox="0 0 16 16" fill="currentColor" width="14" height="14"><path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.547z"/></svg></div>
+        Get in touch
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="divider"><hr></div>
+
+<!-- ─── ABOUT ─── -->
+<section id="about">
+  <div class="s-label">Who I am</div>
+  <h2 class="s-title">Think,<br><em>and Create.</em></h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I'm a <strong>Master's student in Computer Science at ETH Zürich</strong>, specialising in AI and machine intelligence. I graduated with honors from Saarland University (top&nbsp;5%) and spent an awesome year at the University of Washington.</p>
+      <p>What drives me is the intersection of <strong>technical work</strong> and <strong>creative problem-solving</strong>. I've built apps used by real people, published research, won hackathons, and taught complex topics to hundreds of students.</p>
+      <p>The best solutions are both technically elegant <em>and</em> intuitively simple.</p>
+    </div>
+    <div class="skills-stack">
+      <div class="skill-card">
+        <div class="skill-card-label">Languages</div>
+        <div class="tags">
+          <span class="tag">Python</span><span class="tag">Java</span>
+          <span class="tag">C/C++</span><span class="tag">Swift</span><span class="tag">LaTeX</span>
         </div>
       </div>
-    </header>
-    <!-- About section -->
-    <section id="about" class="section">
-      <div class="section-content">
-        <h2>About Me</h2>
-        <!-- Portrait at the top of the about section -->
-        <div class="portrait">
-          <img src="images/portrait.jpg" alt="Portrait" />
-        </div>
-        <div class="cards">
-          <div class="card">
-            <i class="fas fa-graduation-cap"></i>
-            <h3>Academic Journey</h3>
-            <p>
-              MSc student in Computer Science at ETH Zürich specialising in AI and
-              privacy‑preserving systems. Previously completed a BSc at
-              Saarland University (Honors, top 5 %) and studied abroad at the
-              University of Washington.
-            </p>
-          </div>
-          <div class="card">
-            <i class="fas fa-brain"></i>
-            <h3>Interests</h3>
-            <p>
-              Passionate about privacy‑preserving machine learning,
-              cryptography and AI applications. I enjoy exploring new ideas
-              at the intersection of theory and practice.
-            </p>
-          </div>
-          <div class="card">
-            <i class="fas fa-code"></i>
-            <h3>Skills</h3>
-            <p>
-              Strong programming background in Python, Java, C/C++ and LaTeX,
-              with solid foundations in algorithms, statistics and security.
-              I enjoy teaching and making complex topics accessible.
-            </p>
-          </div>
+      <div class="skill-card">
+        <div class="skill-card-label">Domains</div>
+        <div class="tags">
+          <span class="tag">Machine Learning</span><span class="tag">Privacy-preserving AI</span>
+          <span class="tag">Cryptography</span><span class="tag">Algorithms</span>
         </div>
       </div>
-    </section>
-    <!-- CV / Experience section -->
-    <section id="cv" class="section">
-      <div class="section-content">
-        <h2>Experience &amp; Journey</h2>
-        <div class="timeline">
-          <!-- Column 1: Student Journey -->
-          <div class="timeline-col">
-            <h3>Student Journey</h3>
-            <div class="timeline-item">
-              <time>Sep 2024 – Aug 2026</time>
-              <h4>MSc Computer Science, ETH Zürich</h4>
-              <p>Specialisation in AI &amp; privacy‑preserving systems. Current GPA: 5.49/6.0</p>
-            </div>
-            <div class="timeline-item">
-              <time>Sep 2022 – Jun 2023</time>
-              <h4>Exchange Year, University of Washington</h4>
-              <p>Computer Science studies in Seattle, USA.</p>
-            </div>
-            <div class="timeline-item">
-              <time>Sep 2020 – Mar 2024</time>
-              <h4>BSc Computer Science, Saarland University</h4>
-              <p>Graduated with honours (GPA 1.3/1.0, top 5 %).</p>
-            </div>
-            <div class="timeline-item">
-              <time>Jun 2020</time>
-              <h4>High School Valedictorian</h4>
-              <p>Top graduate of the year with overall grade 1.0.</p>
-            </div>
-          </div>
-          <!-- Column 2: Academic & Research -->
-          <div class="timeline-col">
-            <h3>Academic &amp; Research</h3>
-            <div class="timeline-item">
-              <time>2024 – Present</time>
-              <h4>Research Projects at ETH Zürich</h4>
-              <p>Survival analysis with greater interpretability at Boeva Lab &amp;
-                privacy‑preserving auditing of ML misclassifications (paper in submission) in the MPC setting at PPS Lab.</p>
-            </div>
-            <div class="timeline-item">
-              <time>Nov 2023 – Jul 2024</time>
-              <h4>Research Assistant, CISPA</h4>
-              <p>Worked on applications of secret‑sharing as part of by bachelor thesis.</p>
-            </div>
-            <div class="timeline-item">
-              <time>2022</time>
-              <h4>Seminar Papers</h4>
-              <p>Authored review articles on open‑source forking and
-                estimating code difficulty by psycho‑physiological measures.</p>
-            </div>
-          </div>
-          <!-- Column 3: Industry & Teaching -->
-          <div class="timeline-col">
-            <h3>Industry &amp; Teaching</h3>
-            <div class="timeline-item">
-              <time>Sep 2025 – Present</time>
-              <h4>Co‑Founder, LupAi</h4>
-              <p>Building AI products and consultancy services for small and
-                medium‑sized businesses.</p>
-            </div>
-            <div class="timeline-item">
-              <time>Sep 2024 – Jun 2025</time>
-              <h4>Tutor, CAS DML at ETH</h4>
-              <p>Supervised business professionals exploring AI.</p>
-            </div>
-            <div class="timeline-item">
-              <time>Apr 2022 – Sep 2022<br/>Nov 2023 – Mar 2024</time>
-              <h4>Teaching Assistant, Saarland University</h4>
-              <p>Supported Programming 2 and Algorithms courses; held
-                sections, corrected exams and assignments.</p>
-            </div>
-            <div class="timeline-item">
-              <time>Aug 2020 – Jul 2021</time>
-              <h4>Working Student, PIKON Germany</h4>
-              <p>Contributed to machine learning projects and data science
-                initiatives.</p>
-            </div>
-          </div>
+      <div class="skill-card">
+        <div class="skill-card-label">Currently</div>
+        <div class="tags">
+          <span class="tag">ETH Zürich MSc</span><span class="tag">LupAi</span><span class="tag">Research</span>
         </div>
       </div>
-    </section>
-    <!-- Projects section -->
-    <section id="projects" class="section">
-      <div class="section-content">
-        <h2>Projects</h2>
-        <div class="cards projects-cards">
-          <!-- Sentiment Analysis project card with PDF preview and links -->
-          <div class="card project-card">
-            <div class="project-media">
-              <!-- Embed a preview of the first page of the report; the embed is clickable to download the full PDF -->
-              <a href="assets/paper.pdf" target="_blank">
-                <embed src="assets/paper.pdf#page=1&zoom=80" type="application/pdf" />
-              </a>
-            </div>
-            <div class="project-info">
-              <h3>Sentiment Analysis</h3>
-              <p>
-                A learned‑prompting approach using large language models to
-                extract nuanced sentiment from text. Includes a report summarising
-                the methodology and results.
-              </p>
-              <div class="project-links">
-                <a href="https://github.com/nibr1609/Learned-Prompting-Sentiment-Analysis" target="_blank">GitHub</a>
-                <span>&middot;</span>
-                <a href="assets/paper.pdf" target="_blank">Download&nbsp;PDF</a>
-              </div>
-            </div>
-          </div>
-          <!-- Medical Imaging project card with GIF preview -->
-          <div class="card project-card">
-            <div class="project-media">
-              <img src="images/mitral.gif" alt="Mitral valve segmentation GIF" />
-            </div>
-            <div class="project-info">
-              <h3>Medical Imaging</h3>
-              <p>
-                Implemented a custom U‑Net to segment the mitral valve from
-                ultrasound images, enabling more precise cardiac analysis.
-              </p>
-              <div class="project-links">
-                <a href="https://github.com/nibr1609/MitralValveSegmentation" target="_blank">GitHub</a>
-              </div>
-            </div>
-          </div>
-          <!-- Secure Chat project card with encrypted terminal icon -->
-          <div class="card project-card">
-            <div class="project-media">
-              <!-- Custom SVG representing an encrypted terminal -->
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 64 64"
-                class="secure-icon"
-                aria-hidden="true"
-              >
-                <!-- Terminal screen -->
-                <rect x="4" y="10" width="56" height="38" rx="3" ry="3" fill="none" stroke="var(--color-primary)" stroke-width="2" />
-                <!-- Lock body -->
-                <rect x="22" y="28" width="20" height="18" rx="2" ry="2" fill="var(--color-primary)" opacity="0.15" />
-                <path d="M32 34 v6" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" />
-                <circle cx="32" cy="41" r="3" fill="var(--color-primary)" />
-                <!-- Command prompt caret -->
-                <polyline points="10 18 16 24 10 30" fill="none" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-            </div>
-            <div class="project-info">
-              <h3>Secure Chat</h3>
-              <p>
-                Developed a two‑party chat prototype with end‑to‑end
-                encryption to showcase secure communication concepts.
-              </p>
-              <div class="project-links">
-                <a href="https://github.com/nibr1609/twoPartyChat" target="_blank">GitHub</a>
-              </div>
-            </div>
-          </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- ─── VENTURES ─── -->
+<section id="ventures">
+  <div class="s-label">What I've built</div>
+  <h2 class="s-title">Ventures &amp;<br><em>projects.</em></h2>
+
+  <!-- LupAi — FIRST -->
+  <div class="project-card">
+    <div class="p-badges">
+      <span class="p-badge p-active">Active · Sep 2025 – Present</span>
+      <span class="p-badge p-ai">AI Startup</span>
+    </div>
+    <div class="project-header-row">
+      <div class="lupai-title-row">
+        <img src="lupai.png" alt="LupAi" class="lupai-logo">
+        <div class="project-title">LupAi</div>
+      </div>
+      <a href="https://lupai.ch" target="_blank" rel="noopener" class="project-link">
+        lupai.ch
+        <svg viewBox="0 0 16 16" fill="currentColor" width="10" height="10"><path d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/><path d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/></svg>
+      </a>
+    </div>
+    <p class="project-desc">AI consulting &amp; development for small and medium-sized businesses. Built RAG pipelines and LLM-driven financial document extraction systems, enabling SMBs to unlock insights from their unstructured data: bringing enterprise AI capabilities to teams that actually need them.</p>
+    <div class="feature-bento">
+
+      <!-- Financial Extraction — 2/3 width, full diagram visible -->
+      <div class="fb-card fb-rag">
+        <img src="family_office_extraction.jpg" alt="Financial document extraction pipeline" class="fb-img-contain">
+        <div class="fb-content">
+          <div class="fb-title">Financial Document Extraction</div>
+          <div class="fb-body">End-to-end pipeline for structured data extraction from PDFs: local ingestion, anonymization, LLM parsing with mapping rules, and consistency checks. Transmission and processing happen entirely in Switzerland.</div>
         </div>
       </div>
-    </section>
-    <!-- LupAi section (formerly startup) -->
-    <section id="lupai" class="section">
-      <div class="section-content">
-        <h2>LupAi</h2>
-        <p class="startup-desc">
-          I co‑founded
-          <a href="https://lupai.ch" target="_blank">LupAi</a>, a lean and
-          research‑driven AI consultancy. We combine academic depth with
-          pragmatic industry insight to help businesses turn data into
-          value. While not being your typical textbook start‑up, the company reflects my
-          passion for building useful AI without the hype.
-        </p>
-        <p class="startup-desc">
-          Our team of ETH Zürich students and industry professionals
-          delivers bespoke AI‑powered products, predictive insights and
-          trustworthy solutions that scale.
-        </p>
+
+      <!-- Vaterland testimonial — 1/3 width -->
+      <div class="fb-card fb-testimonial">
+        <div class="fb-testimonial-body">
+          <div class="fb-title" style="margin-bottom:10px;">Small and medium size focus</div>
+          <img src="vaterland_logo.svg" alt="Liechtenstein Vaterland" class="vaterland-logo">
+          <div class="t-label">Liechtenstein's leading newspaper</div>
+          <p class="t-quote">"We were drowning in old archives. LupAi built a solution tailored to our workflow, giving journalists fast access to accurate, source-backed information they can trust."</p>
+          <div class="t-cite">— Daniel Bargetze, CEO</div>
+        </div>
       </div>
-    </section>
-    <!-- Contact section -->
-    <section id="contact" class="section">
-      <div class="section-content">
-        <h2>Let's Connect</h2>
-        <p>Interested in collaborating or learning more? Feel free to reach out.</p>
-        <div class="contact-buttons">
-        <a
-          href="https://www.linkedin.com/in/niklasbritz/"
-          target="_blank"
-          class="contact-btn"
-        >
-          <!-- LinkedIn icon inline SVG -->
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 448 512"
-            aria-hidden="true"
-            focusable="false"
-          >
-            <path
-              d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z"
-            />
-          </svg>
+
+      <!-- RAG — full width, text left / image right -->
+      <div class="fb-card fb-financial fb-rag-fullwidth">
+        <div class="fb-content">
+          <div class="fb-title">RAG Systems</div>
+          <div class="fb-body">Retrieval-augmented generation pipelines that connect LLMs to internal document archives with source-backed, verifiable answers.</div>
+        </div>
+        <img src="rag.jpeg" alt="RAG system in action" class="fb-img-side">
+      </div>
+
+    </div>
+    <div class="tags" style="margin-top:24px;">
+      <span class="tag">Python</span><span class="tag">RAG</span>
+      <span class="tag">LLMs</span><span class="tag">Document AI</span><span class="tag">Co-Founder</span>
+    </div>
+  </div>
+
+  <!-- YouKnow -->
+  <div class="project-card">
+    <div class="p-badges">
+      <span class="p-badge p-exited">Exited · Apr 2026</span>
+      <span class="p-badge p-ios">iOS App</span>
+    </div>
+    <div class="yk-layout">
+      <div>
+        <div class="project-title">YouKnow (exited)</div>
+        <p class="project-desc">A social discovery platform that transforms how people share and find places. Instead of star ratings, YouKnow lets you search by vibe. For example, you can search "a cozy spot for a first date" or "the best hidden rooftop bar." Built collaborative recommendation maps, gamified exploration with XP levels, and community-curated location data available globally.</p>
+        <div class="tags">
+          <span class="tag">iOS / Swift</span><span class="tag">Social Discovery</span>
+          <span class="tag">Maps</span><span class="tag">Recommendation Engine</span><span class="tag">Gamification</span>
+        </div>
+      </div>
+      <div class="phone-showcase">
+        <div class="phone-lg">
+          <div class="phone-lg-screen">
+            <img src="IMG_0716.PNG" class="ps-img active" alt="YouKnow">
+            <img src="IMG_0717.PNG" class="ps-img" alt="YouKnow">
+            <img src="IMG_0718.PNG" class="ps-img" alt="YouKnow">
+            <img src="IMG_0719.PNG" class="ps-img" alt="YouKnow">
+            <img src="IMG_0720.PNG" class="ps-img" alt="YouKnow">
+            <img src="IMG_0722.PNG" class="ps-img" alt="YouKnow">
+            <img src="IMG_0724.PNG" class="ps-img" alt="YouKnow">
+            <img src="IMG_0726.PNG" class="ps-img" alt="YouKnow">
+          </div>
+        </div>
+        <div class="ps-controls">
+          <button class="sl-btn" id="slPrev" aria-label="Previous">
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M10.854 4.146a.5.5 0 0 1 0 .708L7.707 8l3.147 3.146a.5.5 0 0 1-.708.708l-3.5-3.5a.5.5 0 0 1 0-.708l3.5-3.5a.5.5 0 0 1 .708 0z"/></svg>
+          </button>
+          <div class="sl-dots" id="slDots"></div>
+          <button class="sl-btn" id="slNext" aria-label="Next">
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M5.146 4.146a.5.5 0 0 0 0 .708L8.293 8 5.146 11.146a.5.5 0 0 0 .708.708l3.5-3.5a.5.5 0 0 0 0-.708l-3.5-3.5a.5.5 0 0 0-.708 0z"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hackathon grid -->
+  <div class="hackathon-grid">
+    <div class="hack-card">
+      <img src="hackathon.jpeg" alt="Claude Builder Club 2026 Hackathon" class="hack-img">
+      <div class="hack-body">
+        <div class="p-badges" style="margin-bottom:14px;">
+          <span class="p-badge p-hack">1st Place</span>
+          <span class="p-badge p-active">Claude Builder Club 2026</span>
+        </div>
+        <div class="hack-title">Zenline</div>
+        <p class="hack-desc">Won the Claude Builder Club 2026 Hackathon in Zurich. A competitive pricing intelligence platform that automatically matches a retailer's catalog to competitor products. It replaces days of manual research with a vector search + LLM reranking pipeline.</p>
+        <div class="tags" style="margin-bottom:16px;">
+          <span class="tag">TypeScript</span><span class="tag">Next.js</span>
+          <span class="tag">Python</span><span class="tag">Weaviate</span><span class="tag">Claude API</span>
+        </div>
+        <a href="https://github.com/nibr1609/zenline_hackathon" target="_blank" rel="noopener" class="project-link">
+          <svg viewBox="0 0 16 16" fill="currentColor" width="12" height="12"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          GitHub
         </a>
-        <a
-          href="https://github.com/nibr1609"
-          target="_blank"
-          class="contact-btn"
-        >
-          <!-- GitHub icon inline SVG -->
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 496 512"
-            aria-hidden="true"
-            focusable="false"
-          >
-            <path
-              d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"
-            />
-          </svg>
-        </a>
-        <!-- <a href="mailto:" class="contact-btn">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 512 512"
-            aria-hidden="true"
-            focusable="false"
-          >
-            <path
-              d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48L48 64zM0 176L0 384c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-208L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"
-            />
-          </svg>
-        </a> -->
-        </div>
       </div>
-    </section>
-    <!-- Footer -->
-    <footer class="footer">
-      <p>&copy; 2025 Niklas Britz</p>
-    </footer>
-  </body>
+    </div>
+
+    <div class="hack-card">
+      <img src="solace_screen1.jpg" alt="Solace app screenshot" class="hack-img">
+      <div class="hack-body">
+        <div class="p-badges" style="margin-bottom:14px;">
+          <span class="p-badge p-hack">Hackathon</span>
+          <span class="p-badge p-active">Swiss AI · ETH</span>
+        </div>
+        <div class="hack-title">Solace</div>
+        <p class="hack-desc">Built in 24h at the Swiss AI Hackathon by ETH Entrepreneur Club. A post-loss administrative companion guiding relatives through German and Swiss bureaucracy after a death: insurance claims, inheritance, AI-generated correspondence, OCR document parsing.</p>
+        <div class="tags" style="margin-bottom:16px;">
+          <span class="tag">Next.js</span><span class="tag">FastAPI</span>
+          <span class="tag">LangChain</span><span class="tag">OCR</span><span class="tag">OpenAI</span>
+        </div>
+        <a href="https://github.com/nibr1609/solace" target="_blank" rel="noopener" class="project-link">
+          <svg viewBox="0 0 16 16" fill="currentColor" width="12" height="12"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+
+    <div class="hack-card">
+      <img src="mitral.gif" alt="Mitral valve segmentation" class="hack-img">
+      <div class="hack-body">
+        <div class="p-badges" style="margin-bottom:14px;">
+          <span class="p-badge p-hack">Project</span>
+          <span class="p-badge p-active">Computer Vision · Medical AI</span>
+        </div>
+        <div class="hack-title">Mitral Valve Segmentation</div>
+        <p class="hack-desc">Custom U-Net implementation for automated segmentation of the mitral valve in cardiac ultrasound sequences. Trained on annotated echocardiography data, enabling accurate and efficient diagnostic workflows for cardiologists.</p>
+        <div class="tags" style="margin-bottom:16px;">
+          <span class="tag">Python</span><span class="tag">PyTorch</span>
+          <span class="tag">U-Net</span><span class="tag">Computer Vision</span><span class="tag">Medical Imaging</span>
+        </div>
+        <a href="https://github.com/nibr1609/MitralValveSegmentation" target="_blank" rel="noopener" class="project-link">
+          <svg viewBox="0 0 16 16" fill="currentColor" width="12" height="12"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- ─── RESEARCH ─── -->
+<section id="research">
+  <div class="s-label">Academic work</div>
+  <h2 class="s-title">Research &amp;<br><em>publications.</em></h2>
+
+  <div class="research-grid">
+
+    <!-- 1. UTrace (ML Privacy) -->
+    <div class="r-card">
+      <img src="utrace.jpg" alt="UTrace paper" class="r-img-fill">
+      <div class="r-body">
+        <div class="r-domain">Privacy &middot; ML Security</div>
+        <div class="r-title">UTrace: Poisoning Forensics for Private Collaborative Learning</div>
+        <p class="r-desc">Cryptographic protocols like MPC protect data privacy but blind-spot data poisoning. UTrace provides post-hoc auditing that attributes model integrity failures to responsible data owners — combining gradient similarity analysis with user-level unlearning, without compromising MPC privacy guarantees.</p>
+        <a href="https://arxiv.org/abs/2409.15126" target="_blank" rel="noopener" class="r-link">
+          arXiv preprint
+          <svg viewBox="0 0 16 16" fill="currentColor" width="10" height="10"><path d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/><path d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- 2. Survival Analysis -->
+    <div class="r-card">
+      <img src="survival.png" alt="Survival analysis — RELGAM" class="r-img-contain">
+      <div class="r-body">
+        <div class="r-domain">Medical AI &middot; Statistics</div>
+        <div class="r-title">Nonparametric Survival Analysis with RELGAM</div>
+        <p class="r-desc">Developed regularized generalized additive models (RELGAM) for survival analysis, capturing nonlinear covariate effects in clinical data. Compared against classical methods like glmnet, achieving more expressive hazard function estimates for patient outcome prediction.</p>
+      </div>
+    </div>
+
+    <!-- 3. Sentiment Analysis -->
+    <div class="r-card">
+      <div class="sentiment-collage">
+        <img src="sentiment1.jpg" alt="Sentiment system diagram" class="sc-wide">
+        <img src="sentiment2.jpg" alt="Sentiment algorithm" class="sc-half">
+        <img src="sentiment3.jpg" alt="Sentiment results" class="sc-half">
+      </div>
+      <div class="r-body">
+        <div class="r-domain">NLP &middot; LLMs</div>
+        <div class="r-title">Sentiment Analysis via Learned Prompting</div>
+        <p class="r-desc">Built a learned prompting framework for sentiment classification using LLMs, combining a neural prompt selector (DistilRoBERTa) with a greedy prompt optimizer. Outperforms standard prompting strategies on accuracy, F1, and NMAE across sentiment benchmarks.</p>
+        <a href="https://github.com/nibr1609/Learned-Prompting-Sentiment-Analysis" target="_blank" rel="noopener" class="r-link">
+          GitHub
+          <svg viewBox="0 0 16 16" fill="currentColor" width="10" height="10"><path d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/><path d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- 4. Bachelor Thesis -->
+    <div class="r-card">
+      <div class="bt-collage">
+        <img src="bt3.jpg" alt="Bachelor thesis cover" class="bt-cover">
+        <img src="bt1.jpg" alt="Bachelor thesis content" class="bt-half">
+        <img src="bt2.jpg" alt="Bachelor thesis content" class="bt-half">
+      </div>
+      <div class="r-body">
+        <div class="r-domain">Cryptography &middot; Theory</div>
+        <div class="r-title">Gaussian Linear Secret Sharing</div>
+        <p class="r-desc">Two threshold secret sharing schemes over infinite algebraic structures — continuous linear sharing over ℝ and approximate linear sharing over ℤ — motivated by RSA distributed exponentiation. Secrets are hidden under Gaussian distributed shares, with security and reconstruction analyzed rigorously. Saarland University, March 2024.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- ─── CONTACT ─── -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="s-label">Let's connect</div>
+    <h2 class="s-title">Say hello.</h2>
+    <p>Whether you want to talk about AI, build something together, or just grab a coffee. I'm always happy to connect with curious people.</p>
+    <div class="contact-links">
+      <a href="mailto:nbritz@student.ethz.ch" class="c-link primary">
+        <svg viewBox="0 0 16 16" fill="currentColor"><path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.547z"/></svg>
+        Email me
+      </a>
+      <a href="https://www.linkedin.com/in/niklas-britz" class="c-link" target="_blank" rel="noopener">
+        <svg viewBox="0 0 16 16" fill="currentColor"><path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://github.com/nibr1609" class="c-link" target="_blank" rel="noopener">
+        <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+        GitHub
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>Niklas Britz &middot; ETH Zürich &middot; Built with curiosity</footer>
+
+<script>
+  (function () {
+    const imgs   = Array.from(document.querySelectorAll('.ps-img'));
+    const dotsEl = document.getElementById('slDots');
+    const n      = imgs.length;
+    let cur = 0, timer;
+
+    imgs.forEach((_, i) => {
+      const d = document.createElement('div');
+      d.className = 'sl-dot' + (i === 0 ? ' active' : '');
+      d.addEventListener('click', () => { go(i); reset(); });
+      dotsEl.appendChild(d);
+    });
+
+    function go(idx) {
+      imgs[cur].classList.remove('active');
+      dotsEl.children[cur].classList.remove('active');
+      cur = ((idx % n) + n) % n;
+      imgs[cur].classList.add('active');
+      dotsEl.children[cur].classList.add('active');
+    }
+
+    function reset() { clearInterval(timer); timer = setInterval(() => go(cur + 1), 2800); }
+
+    document.getElementById('slPrev').addEventListener('click', () => { go(cur - 1); reset(); });
+    document.getElementById('slNext').addEventListener('click', () => { go(cur + 1); reset(); });
+    timer = setInterval(() => go(cur + 1), 2800);
+  })();
+</script>
+
+</body>
 </html>
